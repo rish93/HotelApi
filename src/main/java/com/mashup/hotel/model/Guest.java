@@ -48,7 +48,6 @@ public class Guest {
 	@Column
 	@NotNull
 	@Size(min=10,max=10, message="contact should have atleast 10 digits")
-
 	private String contact;
 	
 	public String getCheckInTime() {
@@ -83,9 +82,7 @@ public class Guest {
 		this.email = email;
 	}
 
-	public String getDate() {
-		return checkInTime;
-	}
+	
 
 	public void setDate(long dateMilisecond) {
 		Date date= new Date(dateMilisecond);

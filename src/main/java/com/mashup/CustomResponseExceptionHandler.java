@@ -26,14 +26,4 @@ public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandl
 	    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
 
       }
-//	 @Override
-//	 protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(
-//				HttpMediaTypeNotAcceptableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-//
-//			
-//			  ErrorDetails errorDetails = new ErrorDetails(new Date(), "Validation Failed",
-//					  handleExceptionInternal(ex, null, headers, status, request).getBody().toString());
-//			return  new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-//	 
-//	 }
 }

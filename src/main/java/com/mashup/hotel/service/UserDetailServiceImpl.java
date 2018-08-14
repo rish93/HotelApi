@@ -20,7 +20,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	private ApplicationUserRepository applicationUserRepository;
 
 	    public UserDetailServiceImpl(ApplicationUserRepository applicationUserRepository)
-	    {
+	    { 
 	        this.applicationUserRepository = applicationUserRepository;
 	    }
 	    

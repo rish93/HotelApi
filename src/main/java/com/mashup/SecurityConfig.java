@@ -26,8 +26,6 @@ import com.mashup.hotel.service.UserDetailServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity
-//@EntityScan("com.mashup.security.model") 
-//@ComponentScan(basePackages= {"com.mashup.security"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	
@@ -41,11 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	   @Autowired
 	    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
-//	   @Bean
-//	    public JWTAuthenticationFilter jwtAuthenticationFilter() {
-//	        return new JWTAuthenticationFilter();
-//	    }
-	    
 	   public SecurityConfig(UserDetailServiceImpl userDetailsService, 
 			    BCryptPasswordEncoder bCryptPasswordEncoder) {
 	        		this.userDetailsService = userDetailsService;
@@ -53,33 +46,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        		System.out.println("------------------ " +sign_up_url+" ------------------");
 	    }
 	    
-//	@Bean
-//     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
-//     }
-	 
-	
 	    @Override
 	    protected void configure(HttpSecurity http) throws Exception {
 	        http.cors().and().csrf().disable().exceptionHandling()
 	        .authenticationEntryPoint(unauthorizedHandler)
 	        .and().authorizeRequests()
-	               
-	                .antMatchers(HttpMethod.POST, "/login/signin", "/login/signup").permitAll()
-	                .antMatchers("/guest/checkIn").permitAll()
-	                .anyRequest().authenticated()
-	                .and()
-	             //   .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-	               
-	                .addFilterAfter(new JwtAuthorizationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-	                .authorizeRequests()
-	                .antMatchers("/admin/")
-	                .authenticated().and()
-	                // .addFilterAfter(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-	                // this disables session creation on Spring Security
-	                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-	        //
-	      //  http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+            .antMatchers(HttpMethod.POST, "/login/signin", "/login/signup").permitAll()
+            .antMatchers("/guest/checkIn").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilterAfter(new JwtAuthorizationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+            .authorizeRequests()
+            .antMatchers("/admin/")
+            .authenticated().and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	    }
 
 	    
@@ -108,71 +88,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    }
 }
 
-
-//import org.springframework.context.annotation.Bean;
-
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-
-//@Configuration
-//@EnableWebSecurity
-//public class LoginApplicationConfig extends WebSecurityConfigurerAdapter{
-
-	
-	//added two user  one with role user ie. USER
-	//second with role admin and user ie. ADMIN
-//	@Autowired
-//	public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
-//		 authenticationMgr.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance())
-//		.withUser("GUEST").password("GUEST").authorities("ROLE_USER").
-//		 and()
-//		.withUser("ADMIN").password("ADMIN").authorities("ROLE_USER","ROLE_ADMIN");
-//	}
-	
-//	@Override
-//	protected void configure(HttpSecurity http)throws Exception {
-//		http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
-//		
-		//		.antMatchers("/")
-		//		.access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-		//		.antMatchers("/guest").access("hasRole('ROLE_USER')")
-		//		.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-		//		.and()
-		//.formLogin().loginPage("adminLogin.html")
-		//.defaultSuccessUrl("adminTracker")
-		//.failureUrl("error")
-		//.usernameParameter("username").passwordParameter("password")
-		//.and()
-		//.logout().logoutSuccessUrl("/adminLogin.html");
-//		
-//	}
-	
-//
-//	@SuppressWarnings("deprecation")
-//	@Bean
-//	public static NoOpPasswordEncoder passwordEncoder() {
-//	return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-//	}
-//	
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		http.authorizeRequests().antMatchers("/**")
-//		.hasRole("USER")
-//		.and()
-//		.formLogin();
-//	}
-//
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication()
-//		.withUser("user")
-//		.password("password")
-//		.roles("USER")
-//		.and()
-//		.withUser("admin")
-//		.password("password")
-//		.roles("ADMIN", "USER");
-//	}
-
-
-//}

@@ -35,11 +35,8 @@ public class JwtTokenProvider {
 
     public String generateToken(Authentication authentication) {
     	Authentication loggedInUser=	SecurityContextHolder.getContext().getAuthentication();
-   //  ApplicationUser userPrincipal =  (ApplicationUser) authentication.getPrincipal();
-
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + 864_000_000);
-        System.out.println(loggedInUser.getName()+"principal name");
         return Jwts.builder().setIssuer( loggedInUser.getName().toString())
                 .setSubject( loggedInUser.getName().toString())
                 .setIssuedAt(new Date())
@@ -48,30 +45,4 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-//    public Long getUserIdFromJWT(String token) {
-//        Claims claims = Jwts.parser()
-//                .setSigningKey(jwtSecret)
-//                .parseClaimsJws(token)
-//                .getBody();
-//
-//        return Long.parseLong(claims.getIssuer());
-//    }
-
-//    public boolean validateToken(String authToken) {
-//        try {
-//            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
-//            return true;
-//        } catch (SignatureException ex) {
-//            logger.error("Invalid JWT signature");
-//        } catch (MalformedJwtException ex) {
-//            logger.error("Invalid JWT token");
-//        } catch (ExpiredJwtException ex) {
-//            logger.error("Expired JWT token");
-//        } catch (UnsupportedJwtException ex) {
-//            logger.error("Unsupported JWT token");
-//        } catch (IllegalArgumentException ex) {
-//            logger.error("JWT claims string is empty.");
-//        }
-//        return false;
-//    }
 }
