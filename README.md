@@ -39,3 +39,15 @@ Body RAW Application Json
 GET  http://localhost:8080/admin/guest?firstName=Rishabh&contact=8756846722
 Header -> Authorixzation =Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNTM0MjQ
                                   zNTMwLCJleHAiOjE1MzUxMDc1MzB9.LWnuMGVd3WvuMnmIeDMVoX4jG0QQRqRNj6hD_o90C7S5A5  QkExvbpG64MZ-9DsK_VWfFVLeBm1yJnR8AndF7xw
+
+
+Actuator Info is permitted to all
+http://localhost:8080/actuator/info
+
+Actuator Authorized
+
+http://localhost:8080/actuator/metrics
+http://localhost:8080/actuator/loggers
+http://localhost:8080/actuator/health
+
+Header  Authozation  {token}
