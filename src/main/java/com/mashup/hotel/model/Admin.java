@@ -6,9 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,10 +26,8 @@ public class Admin {
 
 	    private String username;
 
-	    @JsonIgnore
 	    private String email;
 
-	    @JsonIgnore
 	    private String password;
 
 		public int getId() {

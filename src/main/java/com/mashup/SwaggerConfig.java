@@ -26,7 +26,7 @@ public class SwaggerConfig {
                 .title("Hotel REST API documentation")
                 .description("see https://github.com/rish93/HotelApi")
                 .version("1.0")
-                .license("l1")
+                .license("licence 1.0")
                 .licenseUrl("https://github.com/rish93/HotelApi/LICENSE")
                 .contact("rish93@gmail.com")
                 .build();
