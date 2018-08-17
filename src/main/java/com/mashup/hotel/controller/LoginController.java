@@ -80,7 +80,7 @@ public class LoginController {
 	    	 applicationUserRepository.save(user);
 	        if (applicationUserRepository.findByUsername(user.getUsername()) != null) {
 	        	  statusDetails = new StatusDetails(new Date(), "Username "+user.getUsername(),
-	    			     " registered"  );
+	    			     "registered user to monitor checkIn guests "  );
 	        }
 	        return new  ResponseEntity(statusDetails,HttpStatus.ACCEPTED);
 	    }

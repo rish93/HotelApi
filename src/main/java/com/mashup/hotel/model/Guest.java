@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,7 +30,7 @@ public class Guest {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	@Transient
     static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -44,6 +45,28 @@ public class Guest {
     @ApiModelProperty(notes = "first name of guest", example = "Walter", position = 4)
 	private String firstName;
 	
+	@Column
+    @ApiModelProperty(notes = "Age of Guest", example = "24", position = 4)
+	private Integer age;
+	
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+
 	@Column
     @ApiModelProperty(notes = "last name of guest", example = "White", position = 5)
 	private String lastName;
@@ -102,21 +125,15 @@ public class Guest {
 		this.checkInTime=sdf.format(date);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getfirstName() {
-		return firstName;
-	}
-
-	public void setfirstName(String firstName) {
-		this.firstName = firstName;
-	}
+	
 
 	public String getLastName() {
 		return lastName;
