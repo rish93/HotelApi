@@ -21,10 +21,15 @@ import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 @Component
 @Table(name="guest")
+@ApiModel(description = "Class representing user tracked by an Admin.")
+
 public class Guest {
 
 	@Id
@@ -35,19 +40,23 @@ public class Guest {
     static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	
 	@Column
+    @ApiModelProperty(notes = "check in time of guest, calculated by application", example = "", position = 3)
 	private String checkInTime;
 	
 	@Column
 	@NotNull
 	@Size(min=2, message="Name should have atleast 2 characters")
+    @ApiModelProperty(notes = "first name of guest", example = "Walter", position = 4)
 	private String firstName;
 	
 	@Column
+    @ApiModelProperty(notes = "last name of guest", example = "White", position = 5)
 	private String lastName;
 	
 	@Column
 	@NotNull
 	@Size(min=10,max=10, message="contact should have atleast 10 digits")
+    @ApiModelProperty(notes = "contact of guest ", example = "8756846722", position = 6)
 	private String contact;
 	
 	public String getCheckInTime() {
@@ -63,6 +72,7 @@ public class Guest {
 	@Column
 	@NotNull
 	@Email(message="Email not well formed")
+    @ApiModelProperty(notes = "email of guest ", example = "rish93@gmail.com", position = 7)
 	private String email; 
 	
 	

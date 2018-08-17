@@ -24,7 +24,7 @@ import com.mashup.JwtTokenProvider;
 import com.mashup.SecurityConfig;
 import com.mashup.hotel.dao.ApplicationUserRepository;
 import com.mashup.hotel.model.ApplicationUser;
-import com.mashup.hotel.model.ErrorDetails;
+import com.mashup.hotel.model.StatusDetails;
 import com.mashup.hotel.model.JwtAuthenticationResponse;
 import com.mashup.hotel.service.UserDetailServiceImpl;
 
@@ -49,7 +49,7 @@ public class LoginController {
 	        this.applicationUserRepository = applicationUserRepository;
 	        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	    }
-
+ 
 
 	    @PostMapping("/signin")
 	    public ResponseEntity<?> authenticateUser( @RequestBody ApplicationUser loginRequest) {
@@ -69,19 +69,20 @@ public class LoginController {
 	   
 	    @PostMapping("/signup")
 	    public ResponseEntity<?> signUp(@RequestBody ApplicationUser user) {
-	    	 if(applicationUserRepository.findByUsername(user.getUsername())!=null) {
-	          
-	    		 ErrorDetails errorDetails = new ErrorDetails(new Date(), "Username already taken",
-	    			     "Enter unique Username"  );
+	    	
+	    	if(applicationUserRepository.findByUsername(user.getUsername())!=null) {
+	        	 StatusDetails errorDetails = new StatusDetails(new Date(), "Username already taken",
+			     "Enter unique Username"  );
 	    		 return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
 	         }
-	    	
-	    	user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	   	    StatusDetails statusDetails = null;
+	    	 user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 	    	 applicationUserRepository.save(user);
 	        if (applicationUserRepository.findByUsername(user.getUsername()) != null) {
-	            System.out.println("User :" + user.getUsername() + " added to repository");
+	        	  statusDetails = new StatusDetails(new Date(), "Username "+user.getUsername(),
+	    			     " registered"  );
 	        }
-	        return new  ResponseEntity("Registered",HttpStatus.ACCEPTED);
+	        return new  ResponseEntity(statusDetails,HttpStatus.ACCEPTED);
 	    }
 	
 }

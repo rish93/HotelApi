@@ -7,13 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class ApplicationUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(notes = "THE DATABASE GENERATED ID")
     private long id;
 
     @NotNull
+    @ApiModelProperty(notes = "UNIQUE USERNAME")
     private String username;
     @NotNull
     private String password;

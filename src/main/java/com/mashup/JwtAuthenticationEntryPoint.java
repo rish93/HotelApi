@@ -24,5 +24,4 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 		                "You're not authorized to access this resource.");
 		    
 	}
-
 }

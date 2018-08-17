@@ -10,12 +10,17 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 //@Component
 @Entity
+@ApiModel(description = "Class representing an Admin.")
 public class Admin {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@ApiModelProperty(notes = "The database generated product ID")
 	private int id;
 
 

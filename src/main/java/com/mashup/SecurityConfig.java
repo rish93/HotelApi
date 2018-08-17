@@ -46,13 +46,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        		System.out.println("------------------ " +sign_up_url+" ------------------");
 	    }
 	    
-	    @Override
+	     @Override
 	    protected void configure(HttpSecurity http) throws Exception {
 	        http.cors().and().csrf().disable().exceptionHandling()
 	        .authenticationEntryPoint(unauthorizedHandler)
 	        .and().authorizeRequests()
             .antMatchers(HttpMethod.POST, "/login/signin", "/login/signup").permitAll()
-            .antMatchers("/guest/checkIn").permitAll()
+            .antMatchers("/guest/checkIn","/actuator/info","/actuator/health","/**","/v2/api-docs").permitAll()
+            .antMatchers("/actuator/**").authenticated()
             .anyRequest().authenticated()
             .and()
             .addFilterAfter(new JwtAuthorizationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
