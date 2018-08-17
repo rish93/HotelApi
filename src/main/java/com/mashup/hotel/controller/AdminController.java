@@ -33,17 +33,17 @@ public class AdminController {
   List < Guest > allCheckedInGuest = new ArrayList < Guest > ();
   Iterator < Guest > itr = guestRepository.findAll().iterator();
   while (itr.hasNext()) {
-   allCheckedInGuest.add(itr.next());
+	  allCheckedInGuest.add(itr.next());
   }
   return allCheckedInGuest;
  }
 
- @RequestMapping(value = "/guest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
- @ApiOperation("retrieves the checkin guest based on first name and contact.")
- public @ResponseBody List < Guest > getAllGuestCheckInTime(@RequestParam("firstName") String firstName,
-  @RequestParam("contact") String contact) {
-  return guestRepository.findAllByfirstNameAndcontact(firstName, contact);
- }
+// @RequestMapping(value = "/guest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+// @ApiOperation("retrieves the checkin guest based on first name and contact.")
+// public @ResponseBody List < Guest > getAllGuestCheckInTime(@RequestParam("firstName") String firstName,
+//  @RequestParam("contact") String contact) {
+//    return guestRepository.findAllByfirstNameAndcontact(firstName, contact);
+// }
 
 
 }

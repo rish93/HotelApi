@@ -54,13 +54,13 @@ public class Guest {
     @ApiModelProperty(notes = "contact of guest ", example = "8756846722", position = 6)
 	private String contact;
 	
-	public String getCheckInTime() {
-		return checkInTime;
-	}
-
-	public void setCheckInTime(String checkInTime) {
-		this.checkInTime = checkInTime;
-	}
+//	public String getCheckInTime() {
+//		return checkInTime;
+//	}
+//
+//	public void setCheckInTime(String checkInTime) {
+//		this.checkInTime = checkInTime;
+//	}
 
 	
 
@@ -88,6 +88,14 @@ public class Guest {
 	}
 
 	
+
+	public String getCheckInTime() {
+		return checkInTime;
+	}
+
+	public void setCheckInTime(String checkInTime) {
+		this.checkInTime = checkInTime;
+	}
 
 	public void setDate(long dateMilisecond) {
 		Date date= new Date(dateMilisecond);

@@ -15,12 +15,12 @@ public class GuestServiceImpl  implements GuestService{
 	@Autowired
 	GuestRepository guestRepository;
 	
-	public void guestCheckIn(Guest guest,long date)
-	{
-
-		//Guest guest = new Guest();
-		
-	}
+//	public void guestCheckIn(Guest guest,long date)
+//	{
+//
+//		//Guest guest = new Guest();
+//		
+//	}
 
 	@Override
 	public void guestCheckIn(Guest guest,Long currentTime) {
