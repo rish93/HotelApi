@@ -2,7 +2,7 @@
 
 Services For Guest CheckIn
 
-GET  http://localhost:8080/admin/allGuest
+GET  http://localhost:8080/admin/guest/all
 Header -> Authorization =Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF
                                 0IjoxNTM0MjQyMzA4LCJleHAiOjE1MzUxMDYzMDh9.mO4ba8G_jKZj19zkc9mAh7zwtX_
                                 -uIHpWSY63YwHCuPtMjeii-Ks-amn_SU33k0l75ICJKskmsX_TMI2MstfRg
