@@ -18,8 +18,8 @@ public class SwaggerConfig {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select().apis(RequestHandlerSelectors.basePackage("com.mashup.hotel.controller"))
-                .paths(PathSelectors.any()) // .paths(regex("/product.*"))
-                .build().apiInfo(metadata());
+               .paths(PathSelectors.any()) // .paths(regex("/product.*"))
+                .build().pathMapping("/api").apiInfo(metadata());
     }
     private ApiInfo metadata() {
         return new ApiInfoBuilder()

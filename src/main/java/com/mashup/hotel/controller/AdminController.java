@@ -33,7 +33,7 @@ public class AdminController {
  @Autowired
  GuestRepository guestRepository;
 
- @RequestMapping(value = "/allGuest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+ @RequestMapping(value = "/guest/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
  @ApiOperation("retrieves all the guest checked in")
  public @ResponseBody List < Guest > getAllGuest() {
   List < Guest > allCheckedInGuest = new ArrayList < Guest > ();
@@ -56,7 +56,7 @@ public class AdminController {
     	if( guestRepository.findByfirstNameAndcontact(guest.getFirstName(), 
     			guest.getContact())==null) {
     		responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
-    				"checked in guest deleted","guest with name \"+guest.getFirstName()+\" deleted");
+    				"checked in guest deleted","guest with name "+guest.getFirstName()+" deleted");
     		 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
     	}
 	 
