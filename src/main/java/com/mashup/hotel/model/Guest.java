@@ -15,6 +15,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import io.swagger.annotations.ApiModel;
@@ -51,6 +52,7 @@ public class Guest {
 	
 	@Column
 	@ApiModelProperty(notes= "checkout time for guest,provided by admin",example = "2018-08-18 17:26:23", position= 5)
+	@Nullable
 	private String checkOutTime;
 	
 	public String getFirstName() {
@@ -143,5 +145,11 @@ public class Guest {
 		this.lastName = lastName;
 	}
 
+	
+	@Override
+	public String toString() {
+	//{System.out.println("firstName"+this.firstName+" lastName"+this.lastName);
+		return "firstName"+this.firstName+" lastName"+this.lastName ;
+	}
 	
 }

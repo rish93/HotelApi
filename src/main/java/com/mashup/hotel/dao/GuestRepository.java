@@ -21,7 +21,8 @@ public interface GuestRepository extends CrudRepository<Guest,Integer>{
 	 List<Guest> findAllByAge(Integer age);
 	 
 	 @Query(value="SELECT a FROM Guest a WHERE a.firstName=:firstName and a.contact=:contact")
-	 List<Guest> findAllByfirstNameAndcontact(@Param("firstName") String firstName, @Param("contact") String contact);
+	 List<Guest> findAllByfirstNameAndcontact(@Param("firstName") String firstName,
+			 										@Param("contact") String contact);
 
 
 	@Modifying(clearAutomatically = true)
@@ -32,5 +33,12 @@ public interface GuestRepository extends CrudRepository<Guest,Integer>{
 	 List<Guest> findAllByCheckInTime(String time);
 	 
 	 Guest findByContact(String contact);
+
+	 @Query(value="SELECT a FROM Guest a WHERE  :checkOutTime is null and a.contact=:contact")
+	 List<Guest> findAllBycheckOutTimeAndContact(@Param("checkOutTime") String checkOutTime,
+		 										@Param("contact") String contact);
+	 @Query(value="SELECT usr FROM Guest usr")
+	 List<Guest> findAllGuest();
+	 
 	 
 }

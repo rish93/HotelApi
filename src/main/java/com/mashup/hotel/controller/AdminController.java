@@ -103,7 +103,9 @@ static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 					"guest checked out","guest with name "+guest.getFirstName()+" checkedout");
 			 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
 		 }
-    return new ResponseEntity("No Guest checked in, can't checkout", HttpStatus.NOT_ACCEPTABLE);
+	 StatusDetails	responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
+				"no guest checkedIn","guest with name "+guest.getFirstName()+" is not checked in");
+    return new ResponseEntity(responseDetails, HttpStatus.NOT_ACCEPTABLE);
 	 
  }
   

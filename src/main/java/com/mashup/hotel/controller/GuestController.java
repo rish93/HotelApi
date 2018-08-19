@@ -52,14 +52,20 @@ public class GuestController {
 						 		+ "contact admin for explicit checkout");
 			   		 return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
 				   }
-					
-				}
+			}
 		}
-		 if(guestRepository.findByContact(guest.getContact())!=null){
-				log.error("Same contact can't check in twice, contact admin for explicit checkout");
-				return new ResponseEntity(new StatusDetails(new Date(),
-						 "Contact No already registered for checkIn "," use another number or contact admin for checkOut"), HttpStatus.BAD_REQUEST);
-		}
+		List<Guest>guestListRep =guestRepository.findAllGuest();
+		System.out.println(guestListRep);
+		if(guestListRep!=null) {
+			for(Guest guestRep_All : guestListRep) {
+				System.out.println("---------------------------------------------------------------------"); 
+					if(guestRep_All.getContact().equals(guest.getContact()) && guestRep_All.getCheckOutTime()==null){
+					log.error("Same contact can't check in twice, contact admin for explicit checkout");
+						return new ResponseEntity(new StatusDetails(new Date(),
+							 "Contact No already registered for checkIn not checked out"," use another number or contact admin for checkOut"), HttpStatus.BAD_REQUEST);
+			        }
+		      }
+	     }
 		 log.info("checkin for the guest "+guest.getFirstName()+" completed");
 		 guestRepository.save(guest);
 		 return new ResponseEntity(new StatusDetails(new Date(),
