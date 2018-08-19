@@ -36,7 +36,7 @@ public class Guest {
     static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	
 	@Column
-    @ApiModelProperty(notes = "check in time of guest, calculated by application", example = "", position = 3)
+    @ApiModelProperty(notes = "check in time of guest, calculated by application", example = "2018-08-18 17:27:22", position = 3)
 	private String checkInTime;
 	
 	@Column
@@ -49,6 +49,9 @@ public class Guest {
     @ApiModelProperty(notes = "Age of Guest", example = "24", position = 4)
 	private Integer age;
 	
+	@Column
+	@ApiModelProperty(notes= "checkout time for guest,provided by admin",example = "2018-08-18 17:26:23", position= 5)
+	private String checkOutTime;
 	
 	public String getFirstName() {
 		return firstName;
@@ -67,6 +70,14 @@ public class Guest {
 	}
 
 
+	public String getCheckOutTime() {
+		return checkOutTime;
+	}
+
+	public void setCheckOutTime(String checkOutTime) {
+		this.checkOutTime = checkOutTime;
+	}
+
 	@Column
     @ApiModelProperty(notes = "last name of guest", example = "White", position = 5)
 	private String lastName;
@@ -77,16 +88,6 @@ public class Guest {
     @ApiModelProperty(notes = "contact of guest ", example = "8756846722", position = 6)
 	private String contact;
 	
-//	public String getCheckInTime() {
-//		return checkInTime;
-//	}
-//
-//	public void setCheckInTime(String checkInTime) {
-//		this.checkInTime = checkInTime;
-//	}
-
-	
-
 	@Column
 	@NotNull
 	@Email(message="Email not well formed")
@@ -110,7 +111,6 @@ public class Guest {
 		this.email = email;
 	}
 
-	
 
 	public String getCheckInTime() {
 		return checkInTime;
@@ -143,9 +143,5 @@ public class Guest {
 		this.lastName = lastName;
 	}
 
-//	public void setDate(String date) {
-//		this.checkInTime = date;
-//	}
-	
 	
 }

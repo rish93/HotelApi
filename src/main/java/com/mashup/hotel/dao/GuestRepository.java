@@ -15,16 +15,20 @@ import com.mashup.hotel.model.Guest;
 public interface GuestRepository extends CrudRepository<Guest,Integer>{
 
 	
-	 @Query("SELECT a FROM Guest a WHERE a.firstName=:firstName and a.contact=:contact")
-	 Guest findByfirstNameAndcontact(@Param("firstName") String firstName, @Param("contact") String contact);
+//	 @Query("SELECT a FROM Guest a WHERE a.firstName=:firstName and a.contact=:contact")
+//	 Guest findByfirstNameAndcontact(@Param("firstName") String firstName, @Param("contact") String contact);
 
 	 List<Guest> findAllByAge(Integer age);
 	 
-//	 @Modifying
-//	 @Transactional
-//	 @Query("DELETE FROM Guest a WHERE a.firstName=:? and a.contact=:?")
-//	 void deleteGuestByNameAndContact(@Param("firstName") String firstName, @Param("contact") String contact);
-	
+	 @Query(value="SELECT a FROM Guest a WHERE a.firstName=:firstName and a.contact=:contact")
+	 List<Guest> findAllByfirstNameAndcontact(@Param("firstName") String firstName, @Param("contact") String contact);
+
+
+	@Modifying(clearAutomatically = true)
+    @Transactional
+	@Query("update Guest guest set guest.checkOutTime =:checkOutTime where guest.id =:id")
+	void updateCheckOutTime(@Param("checkOutTime") String checkOutTime, @Param("id") Integer id);
+
 	 List<Guest> findAllByCheckInTime(String time);
 	 
 	 Guest findByContact(String contact);

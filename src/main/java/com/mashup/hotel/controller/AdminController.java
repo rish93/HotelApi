@@ -2,9 +2,12 @@ package com.mashup.hotel.controller;
 
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +32,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(description = "endpoint for admin related functionality.")
 public class AdminController {
 
+static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	
  @Autowired
  GuestRepository guestRepository;
@@ -51,9 +55,8 @@ public class AdminController {
    {
 	 StatusDetails errorDetails,responseDetails=null;
 	 if(guest!=null) {
-    	 guestRepository.delete(guest);
-	
-    	if( guestRepository.findByfirstNameAndcontact(guest.getFirstName(), 
+    	 guestRepository.deleteById(guest.getId());
+    	if( guestRepository.findAllByfirstNameAndcontact(guest.getFirstName(), 
     			guest.getContact())==null) {
     		responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
     				"checked in guest deleted","guest with name "+guest.getFirstName()+" deleted");
@@ -61,7 +64,7 @@ public class AdminController {
     	}
 	 
 	 }
-	 errorDetails= new StatusDetails(new Date(System.currentTimeMillis()),"Not able to remove ", "est not removed, try later");
+	 errorDetails= new StatusDetails(new Date(System.currentTimeMillis()),"Not able to remove ","guest not removed, try later");
 	 return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
    }
  
@@ -79,4 +82,30 @@ public class AdminController {
     return guestRepository.findAllByAge(age);
  }
 
+  @RequestMapping(value = "/guest/checkOut", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation("retrieves the checkin guest based on checkIn time.")
+  public ResponseEntity<?> checkOutGUest(@RequestBody Guest guest) {
+  
+	 List< Guest > guestRep= guestRepository.findAllByfirstNameAndcontact(guest.getFirstName(),guest.getContact());
+	 if(guestRep!=null && guestRep.size()>0) {
+		 Guest guestCheckin=guestRep.get(0);
+		 Date date= new Date( System.currentTimeMillis());
+		  for(Guest guestCheckedIn: guestRep) {
+				if(guestCheckedIn.getCheckOutTime()==null) {
+					  guestRepository.updateCheckOutTime(sdf.format(date), guestCheckedIn.getId());
+					  StatusDetails	responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
+								"guest checked out","guest with name "+guest.getFirstName()+" checkedout");
+						 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
+				}
+		  }
+		  guestRepository.updateCheckOutTime(sdf.format(date), guestCheckin.getId());
+		  StatusDetails	responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
+					"guest checked out","guest with name "+guest.getFirstName()+" checkedout");
+			 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
+		 }
+    return new ResponseEntity("No Guest checked in, can't checkout", HttpStatus.NOT_ACCEPTABLE);
+	 
+ }
+  
+  
 }

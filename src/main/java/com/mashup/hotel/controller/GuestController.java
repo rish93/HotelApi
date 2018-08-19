@@ -2,9 +2,12 @@ package com.mashup.hotel.controller;
 
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,8 @@ import io.swagger.annotations.ApiOperation;
 @Api(description = "endpoints for guest  checkin.")
 public class GuestController {
 
+	 private final Logger log = LoggerFactory.getLogger(GuestController.class);
+
 	@Autowired
 	GuestRepository guestRepository;
 	
@@ -34,22 +39,32 @@ public class GuestController {
 	@ApiOperation("Stores the checkin detail of guest.")
 	public ResponseEntity<?> checkIn(@Valid  @RequestBody Guest guest) {
 		guest.setDate(System.currentTimeMillis());
-		
-		if(guestRepository.findByfirstNameAndcontact(guest.getFirstName(),guest.getContact())!=null) {
+		List<Guest> guestRep=guestRepository.findAllByfirstNameAndcontact(guest.getFirstName(),
+			     guest.getContact());
+		if(guestRep!=null )
+		{
+			for(Guest guestLoggedIn: guestRep) {
+				if(guestLoggedIn.getCheckOutTime()==null) {
+						 StatusDetails errorDetails = new StatusDetails(new Date(), "Already CheckedIn",
+					     "Guest with same name and contact already checked In, Contact admin"
+					     + "to enable re checkin");
+						 log.error("Guest with same name and contact already checked In, "
+						 		+ "contact admin for explicit checkout");
+			   		 return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+				   }
 					
-			StatusDetails errorDetails = new StatusDetails(new Date(), "Already CheckedIn",
-		     "Guest with name "+guest.getFirstName()+" and contact "+guest.getContact()+"already checked In, Contact admin"
-		     		+ "to enable re checkin");
-   		 return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-        }
-		else if(guestRepository.findByContact(guest.getContact())!=null){
-			 return new ResponseEntity(new StatusDetails(new Date(),
-					 "Contact No already registered for checkIn "," use another number or contact admin for checkOut"), HttpStatus.BAD_REQUEST);
+				}
 		}
-		guestRepository.save(guest);
+		 if(guestRepository.findByContact(guest.getContact())!=null){
+				log.error("Same contact can't check in twice, contact admin for explicit checkout");
+				return new ResponseEntity(new StatusDetails(new Date(),
+						 "Contact No already registered for checkIn "," use another number or contact admin for checkOut"), HttpStatus.BAD_REQUEST);
+		}
+		 log.info("checkin for the guest "+guest.getFirstName()+" completed");
+		 guestRepository.save(guest);
 		 return new ResponseEntity(new StatusDetails(new Date(),
-				 "Checked In","Guest "+guest.getFirstName()+"checkIn"), HttpStatus.ACCEPTED);
-		
-	}
+		                            "Checked In","Guest name "+guest.getFirstName()+" checkedIn"),
+				                     HttpStatus.ACCEPTED);
+	 }
 	
 }
