@@ -63,7 +63,7 @@ Body RAW Application Json
    "email":"rish93@msn.com"
 }
 
-1c) verify same contact used to checkin before admin checkout
+1c) verify checkin with same contact but different name before admin checkout
 
 
 POST  http://localhost:8080/guest/checkIn
@@ -194,9 +194,6 @@ o/p
 }
 
 ---> verify admin service are authenticated
-
-
-
 
 i/p
 http://localhost:8080/admin/guest/all
