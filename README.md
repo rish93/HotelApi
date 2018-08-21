@@ -226,17 +226,27 @@ o/p
 ]
 
 
+#Filter guest
 
+GET
+http://localhost:8080/admin/guest/byAge?age=24
+Header Authorization = Bearer {token}
 
+GET
+http://localhost:8080/admin/guest/bycheckInTime
+Header Authorization = Bearer {token}
 
 ------------------------------------------------------------------------------------------------------
 Actuator Info is permitted to all
+GET
 http://localhost:8080/actuator/info
 
 Actuator Authorized
 
+GET
 http://localhost:8080/actuator/metrics
 http://localhost:8080/actuator/loggers
-http://localhost:8080/actuator/health
-
+http://localhost:8080/actuator/health\
 Header  Authozation  {token}
+
+
