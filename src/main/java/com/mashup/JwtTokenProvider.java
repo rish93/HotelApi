@@ -27,11 +27,7 @@ public class JwtTokenProvider {
 
 	private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-   // @Value("${app.jwtSecret}")
-    private String jwtSecret="secret";
-
-  //  @Value("${app.jwtExpirationInMs}")
-  //  private int jwtExpirationInMs=864_000_000;
+    private final String jwtSecret="secret";
 
     public String generateToken(Authentication authentication) {
     	Authentication loggedInUser=	SecurityContextHolder.getContext().getAuthentication();

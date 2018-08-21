@@ -23,16 +23,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-	@Value("${security.secret-key}")
-	private String secret="secret";
+	private final String secret="secret";
 
-	@Value("${security.token-prefix}")
-	private String token_prefix="Bearer ";
+	private final String token_prefix="Bearer ";
 
-	@Value("${security.header-string}")
-	private String header_string="Authorization";
+	private final String header_string="Authorization";
 
-	
 	 public JwtAuthorizationFilter( AuthenticationManager authManager) {
 	        super(authManager);
 	    }

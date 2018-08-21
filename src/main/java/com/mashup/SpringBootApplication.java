@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguratio
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -22,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @EnableAutoConfiguration
 @Configuration
 @EntityScan("com.mashup.hotel.model") 
+@PropertySource("classpath:/application.properties")
 public class SpringBootApplication {
 
 	public static void main(String[] args) {
@@ -43,4 +46,5 @@ public class SpringBootApplication {
 	     converter.setObjectMapper(getObjectMapper());
 	     return converter;
 	   }
+	   
 }

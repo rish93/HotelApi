@@ -40,5 +40,9 @@ public interface GuestRepository extends CrudRepository<Guest,Integer>{
 	 @Query(value="SELECT usr FROM Guest usr")
 	 List<Guest> findAllGuest();
 	 
+	 @Query("SELECT u FROM Guest u WHERE u.firstName LIKE CONCAT('%',:firstName,'%')")
+	 List<Guest> findAllUsersWithPartOfFirstName(@Param("firstName") String firstName);
 	 
+	 @Query("SELECT u FROM Guest u WHERE u.lastName LIKE CONCAT('%',:lastName,'%')")
+	 List<Guest> findAllUsersWithPartOfLastName(@Param("lastName") String lastName);
 }

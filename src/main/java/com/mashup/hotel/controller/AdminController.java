@@ -34,80 +34,91 @@ public class AdminController {
 
 static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	
- @Autowired
- GuestRepository guestRepository;
-
- @RequestMapping(value = "/guest/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
- @ApiOperation("retrieves all the guest checked in")
- public @ResponseBody List < Guest > getAllGuest() {
-  List < Guest > allCheckedInGuest = new ArrayList < Guest > ();
-  Iterator < Guest > itr = guestRepository.findAll().iterator();
-  while (itr.hasNext()) {
-	  allCheckedInGuest.add(itr.next());
-  }
-  return allCheckedInGuest;
- }
-
- 
- @RequestMapping(value = "/guest/remove", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
- @ApiOperation("retrieves the checkin guest based on first name and contact.")
-   public  ResponseEntity deleteGuest (@RequestBody Guest guest)
-   {
-	 StatusDetails errorDetails,responseDetails=null;
-	 if(guest!=null) {
-    	 guestRepository.deleteById(guest.getId());
-    	if( guestRepository.findAllByfirstNameAndcontact(guest.getFirstName(), 
-    			guest.getContact())==null) {
-    		responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
-    				"checked in guest deleted","guest with name "+guest.getFirstName()+" deleted");
-    		 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
-    	}
-	 
+	 @Autowired
+	 GuestRepository guestRepository;
+	
+	 @RequestMapping(value = "/guest/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	 @ApiOperation("retrieves all the checked in guest")
+	 public @ResponseBody List < Guest > getAllGuest() {
+	   List < Guest > allCheckedInGuest = new ArrayList < Guest > ();
+	   Iterator < Guest > itr = guestRepository.findAll().iterator();
+	   while (itr.hasNext()) {
+		  allCheckedInGuest.add(itr.next());
+	   }
+	  return allCheckedInGuest;
 	 }
-	 errorDetails= new StatusDetails(new Date(System.currentTimeMillis()),"Not able to remove ","guest not removed, try later");
-	 return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-   }
- 
- 
-  @RequestMapping(value = "/guest/bycheckInTime", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  @ApiOperation("retrieves the checkin guest based on checkIn time.")
-  public @ResponseBody List < Guest > getAllGuestByCheckInTime(@RequestParam("checkInTime") String checkInTime) {
-    return guestRepository.findAllByCheckInTime(checkInTime);
- }
 
-  
-  @RequestMapping(value = "/guest/byAge", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  @ApiOperation("retrieves the checkin guest based on checkIn time.")
-  public @ResponseBody List < Guest > getAllGuestByAge(@RequestParam("age") Integer age) {
-    return guestRepository.findAllByAge(age);
- }
-
-  @RequestMapping(value = "/guest/checkOut", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  @ApiOperation("retrieves the checkin guest based on checkIn time.")
-  public ResponseEntity<?> checkOutGUest(@RequestBody Guest guest) {
-  
-	 List< Guest > guestRep= guestRepository.findAllByfirstNameAndcontact(guest.getFirstName(),guest.getContact());
-	 if(guestRep!=null && guestRep.size()>0) {
-		 Guest guestCheckin=guestRep.get(0);
-		 Date date= new Date( System.currentTimeMillis());
-		  for(Guest guestCheckedIn: guestRep) {
-				if(guestCheckedIn.getCheckOutTime()==null) {
-					  guestRepository.updateCheckOutTime(sdf.format(date), guestCheckedIn.getId());
-					  StatusDetails	responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
-								"guest checked out","guest with name "+guest.getFirstName()+" checkedout");
-						 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
-				}
-		  }
-		  guestRepository.updateCheckOutTime(sdf.format(date), guestCheckin.getId());
-		  StatusDetails	responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
-					"guest checked out","guest with name "+guest.getFirstName()+" checkedout");
-			 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
+ 
+	 @RequestMapping(value = "/guest/remove", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	 @ApiOperation("delete the checkin guest")
+	   public  ResponseEntity deleteGuest (@RequestBody Guest guest)
+	   {
+		 StatusDetails errorDetails,responseDetails=null;
+		 if(guest!=null) {
+	    	 guestRepository.deleteById(guest.getId());
+	    	if( guestRepository.findAllByfirstNameAndcontact(guest.getFirstName(), 
+	    			guest.getContact())==null) {
+	    		responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
+	    				"checked in guest deleted","guest with name "+guest.getFirstName()+" deleted");
+	    		 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
+	    	}
+		 
 		 }
-	 StatusDetails	responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
-				"no guest checkedIn","guest with name "+guest.getFirstName()+" is not checked in");
-    return new ResponseEntity(responseDetails, HttpStatus.NOT_ACCEPTABLE);
+		 errorDetails= new StatusDetails(new Date(System.currentTimeMillis()),"Not able to remove ","guest not removed, try later");
+		 return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+	   }
 	 
- }
-  
-  
+	 
+	  @RequestMapping(value = "/guest/bycheckInTime", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	  @ApiOperation("retrieves the checkin guest based on checkIn time.")
+	  public @ResponseBody List < Guest > getAllGuestByCheckInTime(@RequestParam("checkInTime") String checkInTime) {
+	    return guestRepository.findAllByCheckInTime(checkInTime);
+	 }
+	
+	  
+	  @RequestMapping(value = "/guest/byAge", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	  @ApiOperation("retrieves the checkin guest based age.")
+	  public @ResponseBody List < Guest > getAllGuestByAge(@RequestParam("age") Integer age) {
+	    return guestRepository.findAllByAge(age);
+	 }
+	
+	  @RequestMapping(value = "/guest/checkOut", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	  @ApiOperation("checkout the guest")
+	  public ResponseEntity<?> checkOutGUest(@RequestBody Guest guest) {
+	  
+		 List< Guest > guestRep= guestRepository.findAllByfirstNameAndcontact(guest.getFirstName(),guest.getContact());
+		 if(guestRep!=null && guestRep.size()>0) {
+			 Guest guestCheckin=guestRep.get(0);
+			 Date date= new Date( System.currentTimeMillis());
+			  for(Guest guestCheckedIn: guestRep) {
+					if(guestCheckedIn.getCheckOutTime()==null) {
+						  guestRepository.updateCheckOutTime(sdf.format(date), guestCheckedIn.getId());
+						  StatusDetails	responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
+									"guest checked out","guest with name "+guest.getFirstName()+" checkedout");
+							 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
+					}
+			  }
+			  guestRepository.updateCheckOutTime(sdf.format(date), guestCheckin.getId());
+			  StatusDetails	responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
+						"guest checked out","guest with name "+guest.getFirstName()+" checkedout");
+				 return new ResponseEntity(responseDetails, HttpStatus.ACCEPTED);
+			 }
+		 StatusDetails	responseDetails= new StatusDetails(new Date(System.currentTimeMillis()),
+					"no guest checkedIn","guest with name "+guest.getFirstName()+" is not checked in");
+	    return new ResponseEntity(responseDetails, HttpStatus.NOT_ACCEPTABLE);
+		 
+	 }
+	  
+	  @RequestMapping(value = "/guest/byFirstName", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	  @ApiOperation("retrieves the checkin guest based on checkIn time.")
+	  public @ResponseBody List < Guest > getAllUsersWithPartOfFirstName(@RequestParam("firstName") String firstName) {
+	    return guestRepository.findAllUsersWithPartOfFirstName(firstName);
+	 }
+	  
+	  @RequestMapping(value = "/guest/byLastName", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	  @ApiOperation("retrieves the checkin guest based on checkIn time.")
+	  public @ResponseBody List < Guest > getAllGuestByUsername(@RequestParam("lastName") String lastName) {
+	    return guestRepository.findAllUsersWithPartOfLastName(lastName);
+	 }
+	  
 }
