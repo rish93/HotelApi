@@ -14,9 +14,6 @@ import com.mashup.hotel.model.Guest;
 @Repository
 public interface GuestRepository extends CrudRepository<Guest,Integer>{
 
-	
-//	 @Query("SELECT a FROM Guest a WHERE a.firstName=:firstName and a.contact=:contact")
-//	 Guest findByfirstNameAndcontact(@Param("firstName") String firstName, @Param("contact") String contact);
 
 	 List<Guest> findAllByAge(Integer age);
 	 
