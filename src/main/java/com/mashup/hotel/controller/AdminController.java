@@ -26,10 +26,11 @@ import com.mashup.hotel.model.StatusDetails;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 
 @Controller
 @RequestMapping("/admin")
-@Api(description = "endpoint for admin related functionality.")
+@Api(tags="Admin Services",description = "endpoint for admin related functionality.")
 public class AdminController {
 
 static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -38,7 +39,7 @@ static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	 GuestRepository guestRepository;
 	
 	 @RequestMapping(value = "/guest/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	 @ApiOperation("retrieves all the checked in guest")
+	 @ApiOperation(value = "retrieves all the checked in guest", authorizations = { @Authorization(value="apiKey") })
 	 public @ResponseBody List < Guest > getAllGuest() {
 	   List < Guest > allCheckedInGuest = new ArrayList < Guest > ();
 	   Iterator < Guest > itr = guestRepository.findAll().iterator();
@@ -50,7 +51,7 @@ static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
  
 	 @RequestMapping(value = "/guest/remove", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	 @ApiOperation("delete the checkin guest")
+	 @ApiOperation(value="delete the checkin guest", authorizations = { @Authorization(value="apiKey") })
 	   public  ResponseEntity deleteGuest (@RequestBody Guest guest)
 	   {
 		 StatusDetails errorDetails,responseDetails=null;
@@ -70,7 +71,7 @@ static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	 
 	 
 	  @RequestMapping(value = "/guest/bycheckInTime", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	  @ApiOperation("retrieves the checkin guest based on checkIn time.")
+	  @ApiOperation(value="retrieves the checkin guest based on checkIn time." ,authorizations = { @Authorization(value="apiKey") })
 	  public @ResponseBody List < Guest > getAllGuestByCheckInTime(@RequestParam("checkInTime") String checkInTime) {
 	    return guestRepository.findAllByCheckInTime(checkInTime);
 	 }
@@ -83,7 +84,7 @@ static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	 }
 	
 	  @RequestMapping(value = "/guest/checkOut", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	  @ApiOperation("checkout the guest")
+	  @ApiOperation(value="checkout the guest", authorizations = { @Authorization(value="apiKey") })
 	  public ResponseEntity<?> checkOutGUest(@RequestBody Guest guest) {
 	  
 		 List< Guest > guestRep= guestRepository.findAllByfirstNameAndcontact(guest.getFirstName(),guest.getContact());
@@ -110,13 +111,13 @@ static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	 }
 	  
 	  @RequestMapping(value = "/guest/byFirstName", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	  @ApiOperation("retrieves the checkin guest based on checkIn time.")
+	  @ApiOperation(value="retrieves the checkin guest based on checkIn time.", authorizations = { @Authorization(value="apiKey") })
 	  public @ResponseBody List < Guest > getAllUsersWithPartOfFirstName(@RequestParam("firstName") String firstName) {
 	    return guestRepository.findAllUsersWithPartOfFirstName(firstName);
 	 }
 	  
 	  @RequestMapping(value = "/guest/byLastName", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	  @ApiOperation("retrieves the checkin guest based on checkIn time.")
+	  @ApiOperation(value="retrieves the checkin guest based on checkIn time.", authorizations = { @Authorization(value="apiKey") })
 	  public @ResponseBody List < Guest > getAllGuestByUsername(@RequestParam("lastName") String lastName) {
 	    return guestRepository.findAllUsersWithPartOfLastName(lastName);
 	 }

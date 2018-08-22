@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class ApplicationUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(notes = "THE DATABASE GENERATED ID")
+    @ApiModelProperty(notes = "THE DATABASE GENERATED ID",hidden=true)
     private long id;
 
     @NotNull

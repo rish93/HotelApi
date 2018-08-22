@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/guest")
-@Api(description = "endpoints for guest  checkin.")
+@Api(tags="Guest Services",description = "endpoints for guest  checkin.")
 public class GuestController {
 
 	 private final Logger log = LoggerFactory.getLogger(GuestController.class);

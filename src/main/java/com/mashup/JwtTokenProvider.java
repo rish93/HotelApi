@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.mashup.hotel.model.Admin;
 import com.mashup.hotel.model.ApplicationUser;
 
 import io.jsonwebtoken.Claims;

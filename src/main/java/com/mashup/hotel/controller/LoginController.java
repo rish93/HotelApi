@@ -24,10 +24,13 @@ import com.mashup.hotel.model.StatusDetails;
 import com.mashup.hotel.model.JwtAuthenticationResponse;
 import com.mashup.hotel.service.UserDetailServiceImpl;
 
+import io.swagger.annotations.Api;
+
 
 
 @RestController
 @RequestMapping(value="/login")
+@Api(tags="Login Services",description = "endpoint for Login")
 public class LoginController {
 
 	 private final Logger log = LoggerFactory.getLogger(LoginController.class);

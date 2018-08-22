@@ -1,3 +1,6 @@
+#start script by-->  sh script.sh
+#replace auth token by login response token
+
 Echo Building project
 
 Gradle build
@@ -43,35 +46,24 @@ Echo verifying duplicate admin
 curl -X POST "http://localhost:8080/login/signup" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"password\": \"123\", \"username\": \"admin\"}"
  
  
- 
-#Get CheckedIn Guest (Admin)
-Echo verifying duplicate admin 
-#curl -i
-#-X GET
-#-H "Authorization:Bearer {token}"
-#http://localhost:8080/admin/guest/all 
- 
+
  
 #CheckOutGuest (Admin)
 
-#curl -i
-#-X PUT
-#-H "Authorization = Bearer {Token}"
-# http://localhost:8080/admin/guest/checkOut
-#-d "{ "firstName":"Rishabh", "lastName": "M",
- #"age":"24", 
- #"contact": "8756845677",
- #"email":"rish93@msn.com" }"
+curl -X PUT "http://localhost:8080/admin/guest/checkOut" -H "accept: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNTM0NTM5MjQ1LCJleHAiOjE1MzU0MDMyNDV9.yk-k7drDi9ibQ6VLEkGqdVkMJxDj8DeWp60kRvBEU2kLELSVWwe0gsT8HNFZTWryx2Buc4_H1loCid06tckHIA" -H "Content-Type: application/json" -d "{ \"firstName\": \"Walter\", \"age\": 24, \"lastName\": \"White\", \"contact\": 8756846722, \"email\": \"rish93@gmail.com\"}"
 
- #Actuator Info (Unauthenticated)
- 
-# curl -i
-#-X GET
- #http://localhost:8080/actuator/info 
+
+#Guest by Last Name
+curl -X GET "http://localhost:8080/admin/guest/byLastName?lastName=White" -H "accept: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNTM0NTM5MjQ1LCJleHAiOjE1MzU0MDMyNDV9.yk-k7drDi9ibQ6VLEkGqdVkMJxDj8DeWp60kRvBEU2kLELSVWwe0gsT8HNFZTWryx2Buc4_H1loCid06tckHIA"
+
+#Guest by first name
+curl -X GET "http://localhost:8080/admin/guest/byFirstName?firstName=Walter" -H "accept: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNTM0NTM5MjQ1LCJleHAiOjE1MzU0MDMyNDV9.yk-k7drDi9ibQ6VLEkGqdVkMJxDj8DeWp60kRvBEU2kLELSVWwe0gsT8HNFZTWryx2Buc4_H1loCid06tckHIA"
+
+
+#Actuator Info (Unauthenticated)
+curl -X GET "http://localhost:8080/actuator/info" 
 
 
 #Actuator Health (Authenticated)
-# curl -i
-#-X GET
-#-H "Authorization = Bearer {Token}"
-#http://localhost:8080/actuator/health
+curl -X GET "http://localhost:8080/actuator/health" -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNTM0NTM5MjQ1LCJleHAiOjE1MzU0MDMyNDV9.yk-k7drDi9ibQ6VLEkGqdVkMJxDj8DeWp60kRvBEU2kLELSVWwe0gsT8HNFZTWryx2Buc4_H1loCid06tckHIA"
+
