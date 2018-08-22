@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,13 +28,13 @@ import com.mashup.hotel.service.UserDetailServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity
+@PropertySource("classpath:/application.properties")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	
-	@Value("${security.sign-up-url}")
-	private String sign_up_url="/login/sign-up";
+	private final String sign_up_url="/login/sign-up";
 	
-		@Autowired
+	   @Autowired
 	   private UserDetailServiceImpl userDetailsService;
 	   private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -44,7 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			    BCryptPasswordEncoder bCryptPasswordEncoder) {
 	        		this.userDetailsService = userDetailsService;
 	        		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	        		System.out.println("------------------ " +sign_up_url+" ------------------");
 	    }
 	    
 	     @Override

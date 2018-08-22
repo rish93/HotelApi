@@ -37,7 +37,7 @@ public class Guest {
     static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	
 	@Column
-    @ApiModelProperty(notes = "check in time of guest, calculated by application", example = "2018-08-18 17:27:22", position = 3)
+   // @ApiModelProperty(notes = "check in time of guest, calculated by application", example = "2018-08-18 17:27:22", position = 3)
 	private String checkInTime;
 	
 	@Column
@@ -51,7 +51,24 @@ public class Guest {
 	private Integer age;
 	
 	@Column
-	@ApiModelProperty(notes= "checkout time for guest,provided by admin",example = "2018-08-18 17:26:23", position= 5)
+    @ApiModelProperty(notes = "last name of guest", example = "White", position = 5)
+	private String lastName;
+	
+	@Column
+	@NotNull
+	@Size(min=10,max=10, message="contact should have atleast 10 digits")
+    @ApiModelProperty(notes = "contact of guest ", example = "8756846722", position = 6)
+	private String contact;
+	
+	@Column
+	@NotNull
+	@Email(message="Email not well formed")
+    @ApiModelProperty(notes = "email of guest ", example = "rish93@gmail.com", position = 7)
+	private String email; 
+	
+	
+	@Column
+//	@ApiModelProperty(notes= "checkout time for guest,provided by admin",example = "2018-08-18 17:26:23", position= 5)
 	@Nullable
 	private String checkOutTime;
 	
@@ -80,21 +97,6 @@ public class Guest {
 		this.checkOutTime = checkOutTime;
 	}
 
-	@Column
-    @ApiModelProperty(notes = "last name of guest", example = "White", position = 5)
-	private String lastName;
-	
-	@Column
-	@NotNull
-	@Size(min=10,max=10, message="contact should have atleast 10 digits")
-    @ApiModelProperty(notes = "contact of guest ", example = "8756846722", position = 6)
-	private String contact;
-	
-	@Column
-	@NotNull
-	@Email(message="Email not well formed")
-    @ApiModelProperty(notes = "email of guest ", example = "rish93@gmail.com", position = 7)
-	private String email; 
 	
 	
 	public String getContact() {
@@ -148,8 +150,7 @@ public class Guest {
 	
 	@Override
 	public String toString() {
-	//{System.out.println("firstName"+this.firstName+" lastName"+this.lastName);
-		return "firstName"+this.firstName+" lastName"+this.lastName ;
+		return "firstName "+this.firstName+" lastName "+this.lastName ;
 	}
 	
 }

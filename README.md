@@ -228,14 +228,98 @@ o/p
 
 #Filter guest
 
+
+BY AGE:
+i/p
+
 GET
 http://localhost:8080/admin/guest/byAge?age=24
 Header Authorization = Bearer {token}
 
+o/p
+[
+    {
+        "id": 1,
+        "checkInTime": "21-08-2018 20:44:43",
+        "firstName": "Rishabh",
+        "age": 24,
+        "checkOutTime": null,
+        "lastName": "M",
+        "contact": "8756845677",
+        "email": "rish93@msn.com"
+    },
+    {
+        "id": 2,
+        "checkInTime": "21-08-2018 20:44:56",
+        "firstName": "Prateek",
+        "age": 24,
+        "checkOutTime": null,
+        "lastName": "M",
+        "contact": "8756645677",
+        "email": "rish93@msn.com"
+    }
+]
+
+
+BY CHECKINTIME
+
+i/p
 GET
-http://localhost:8080/admin/guest/bycheckInTime
+http://localhost:8080/admin/guest/bycheckInTime?checkInTime=21-08-2018 20:44:43
+HeaderAuthorization = Bearer {Token
+
+O/p
+[
+    {
+        "id": 1,
+        "checkInTime": "21-08-2018 20:44:43",
+        "firstName": "Rishabh",
+        "age": 24,
+        "checkOutTime": "21-08-2018 20:45:54",
+        "lastName": "M",
+        "contact": "8756845677",
+        "email": "rish93@msn.com"
+    }
+]
+
+
+BY FIRST NAME
+GET
+http://localhost:8080/admin/guest/byFirstName?firstName=Ris
 Header Authorization = Bearer {token}
 
+o/p
+[
+    {
+        "id": 1,
+        "checkInTime": "21-08-2018 21:05:04",
+        "firstName": "Rishabh",
+        "age": 24,
+        "checkOutTime": null,
+        "lastName": "M",
+        "contact": "8756645677",
+        "email": "rish93@msn.com"
+    }
+]
+
+BY LAST NAME
+GET
+http://localhost:8080/admin/guest/byFirstName?lastName=M
+Header Authorization = Bearer {token}
+
+o/p
+[
+    {
+        "id": 1,
+        "checkInTime": "21-08-2018 21:05:04",
+        "firstName": "Rishabh",
+        "age": 24,
+        "checkOutTime": null,
+        "lastName": "M",
+        "contact": "8756645677",
+        "email": "rish93@msn.com"
+    }
+]
 ------------------------------------------------------------------------------------------------------
 Actuator Info is permitted to all
 GET

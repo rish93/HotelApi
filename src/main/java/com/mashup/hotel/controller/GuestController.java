@@ -47,7 +47,7 @@ public class GuestController {
 				if(guestLoggedIn.getCheckOutTime()==null) {
 						 StatusDetails errorDetails = new StatusDetails(new Date(), "Already CheckedIn",
 					     "Guest with same name and contact already checked In, Contact admin"
-					     + "to enable re checkin");
+					     + " to enable re checkin");
 						 log.error("Guest with same name and contact already checked In, "
 						 		+ "contact admin for explicit checkout");
 			   		 return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
