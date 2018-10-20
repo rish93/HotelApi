@@ -34,7 +34,7 @@ public class GuestController {
 	GuestRepository guestRepository;
 	
 	
-	@SuppressWarnings("unchecked")
+//	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/checkIn", method=RequestMethod.POST)
 	@ApiOperation("Stores the checkin detail of guest.")
 	public ResponseEntity<?> checkIn(@Valid  @RequestBody Guest guest) {
