@@ -4,3 +4,5 @@
 *.sql
 /.gradle/
 /build/
+.project
+.settings
